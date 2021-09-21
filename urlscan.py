@@ -4,6 +4,7 @@ import argparse
 
 urlscan_apikey = ""  # put urlscan api key here
 
+# performs the parsing of the user given arguments
 parser = argparse.ArgumentParser(
     formatter_class=argparse.ArgumentDefaultsHelpFormatter, prog="urlscan [-b] and [-d] or [-u]")
 parser.add_argument("-b", type=str, default="", help="put brand")
@@ -15,6 +16,7 @@ args = parser.parse_args()
 # function to perform the fixed search based on brand and duration
 def performSearch(brand, duration):
     api_link = "https://urlscan.io/api/v1/search/"
+    # prepares the fixed query for a brand and duration provided
     params = {
         "q": "brand.key:{} AND date:>now-{}".format(brand, duration)
     }
@@ -28,10 +30,12 @@ def performSearch(brand, duration):
     except:
         print("Failed to open {}".format(api_link))
         return
+    # gets all the result set
     all_results = resp.get('results')
     for result in all_results:
         print("brand")
         print("-----")
+        # gets all the brand list
         all_brands = result.get('brand')
         for brand_data in all_brands:
             print("Name: {}".format(brand_data.get('name')))
@@ -52,11 +56,13 @@ def performSearch(brand, duration):
         print("Status: {}".format(result.get('page').get('status')))
         print("Server: {}".format(result.get('page').get('server')))
         print("IP: {}".format(result.get('page').get('ip')))
+        print("="*20)
 
 
 # function to perform custom search query based on user input
 def performQuery(query):
     api_link = "https://urlscan.io/api/v1/search/"
+    # prepares custom query parameters
     params = {
         "q": query
     }
@@ -70,10 +76,12 @@ def performQuery(query):
     except:
         print("Failed to open {}".format(api_link))
         return
+    # gets all the result set
     all_results = resp.get('results')
     for result in all_results:
         print("brand")
         print("-----")
+        # gets all the brand list
         all_brands = result.get('brand')
         for brand_data in all_brands:
             print("Name: {}".format(brand_data.get('name')))
@@ -94,14 +102,18 @@ def performQuery(query):
         print("Status: {}".format(result.get('page').get('status')))
         print("Server: {}".format(result.get('page').get('server')))
         print("IP: {}".format(result.get('page').get('ip')))
+        print("="*20)
 
 
 if __name__ == "__main__":
+    # checks whether the input argument is a brand
     if args.b:
         brand = args.b
         duration = args.d
         performSearch(brand, duration)
+    # checks whether the input argument is a custom query
     elif args.q:
         performQuery(args.q)
     else:
+        # detects that no or invalid arguments given, guides the user on what to do
         print(parser.print_help())

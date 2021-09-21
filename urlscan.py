@@ -32,6 +32,10 @@ def performSearch(brand, duration):
         return
     # gets all the result set
     all_results = resp.get('results')
+    print("Total: {}".format(resp.get('total')))
+    print("Took: {}".format(resp.get('took')))
+    print("Has More: {}".format(resp.get('has_more')))
+    print('\n')
     for result in all_results:
         print("brand")
         print("-----")
@@ -78,6 +82,9 @@ def performQuery(query):
         return
     # gets all the result set
     all_results = resp.get('results')
+    print("Total: {}".format(resp.get('total')))
+    print("Took: {}".format(resp.get('took')))
+    print("Has More: {}".format(resp.get('has_more')))
     for result in all_results:
         print("brand")
         print("-----")

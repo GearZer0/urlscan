@@ -12,6 +12,7 @@ parser.add_argument("-q", type=str, default="", help="put custom query")
 args = parser.parse_args()
 
 
+# function to perform the fixed search based on brand and duration
 def performSearch(brand, duration):
     api_link = "https://urlscan.io/api/v1/search/"
     params = {
@@ -27,9 +28,33 @@ def performSearch(brand, duration):
     except:
         print("Failed to open {}".format(api_link))
         return
-    print(resp)
+    all_results = resp.get('results')
+    for result in all_results:
+        print("brand")
+        print("-----")
+        all_brands = result.get('brand')
+        for brand_data in all_brands:
+            print("Name: {}".format(brand_data.get('name')))
+            print("Country: {}".format(",".join(brand_data.get('country'))))
+            print("Vertical: {}".format(",".join(brand_data.get('vertical'))))
+            print("Key: {}".format(brand_data.get('key')))
+        print("Result: {}".format(brand_data.get('result')))
+        print("Screenshot: {}".format(brand_data.get('screenshot')))
+        print("task")
+        print("----")
+        print("URL: {}".format(result.get('task').get('url')))
+        print("Domain: {}".format(result.get('task').get('domain')))
+        print("Time: {}".format(result.get('task').get('time')))
+        print("page")
+        print("-----")
+        print("URL: {}".format(result.get('page').get('url')))
+        print("Domain: {}".format(result.get('page').get('domain')))
+        print("Status: {}".format(result.get('page').get('status')))
+        print("Server: {}".format(result.get('page').get('server')))
+        print("IP: {}".format(result.get('page').get('ip')))
 
 
+# function to perform custom search query based on user input
 def performQuery(query):
     api_link = "https://urlscan.io/api/v1/search/"
     params = {
@@ -45,7 +70,30 @@ def performQuery(query):
     except:
         print("Failed to open {}".format(api_link))
         return
-    print(resp)
+    all_results = resp.get('results')
+    for result in all_results:
+        print("brand")
+        print("-----")
+        all_brands = result.get('brand')
+        for brand_data in all_brands:
+            print("Name: {}".format(brand_data.get('name')))
+            print("Country: {}".format(",".join(brand_data.get('country'))))
+            print("Vertical: {}".format(",".join(brand_data.get('vertical'))))
+            print("Key: {}".format(brand_data.get('key')))
+        print("Result: {}".format(brand_data.get('result')))
+        print("Screenshot: {}".format(brand_data.get('screenshot')))
+        print("task")
+        print("----")
+        print("URL: {}".format(result.get('task').get('url')))
+        print("Domain: {}".format(result.get('task').get('domain')))
+        print("Time: {}".format(result.get('task').get('time')))
+        print("page")
+        print("-----")
+        print("URL: {}".format(result.get('page').get('url')))
+        print("Domain: {}".format(result.get('page').get('domain')))
+        print("Status: {}".format(result.get('page').get('status')))
+        print("Server: {}".format(result.get('page').get('server')))
+        print("IP: {}".format(result.get('page').get('ip')))
 
 
 if __name__ == "__main__":

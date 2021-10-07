@@ -1,5 +1,6 @@
 import requests
 import argparse
+from time import sleep
 
 
 urlscan_apikey = ""  # put urlscan api key here
@@ -117,14 +118,19 @@ def performDownload(item_link):
         uuid)
     # making the sha256 reveal request
     print("Collecting sha256 value")
-    try:
-        resp = requests.get(api_link, headers=headers).json()
-    except:
-        print("Failed to open {}".format(api_link))
-        return
-    print(resp)
-    # accessing the sha256 and other value from the response
-    sha256_val = resp.get('download').get('data')[0].get('sha256')
+    while True:
+        try:
+            resp = requests.get(api_link, headers=headers).json()
+        except:
+            print("Failed to open {}".format(api_link))
+            return
+        print(resp)
+        # accessing the sha256 and other value from the response
+        try:
+            sha256_val = resp.get('download').get('data')[0].get('sha256')
+            break
+        except:
+            sleep(5)
     print("sha256: {}".format(sha256_val))
     filename = resp.get('download').get('data')[0].get('filename')
     filesize = resp.get('download').get('data')[0].get('filesize')

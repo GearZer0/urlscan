@@ -114,10 +114,11 @@ def performDownload(item_link):
         return
     # collecting the uuid from the response
     uuid = resp.get('uuid')
+    print("UUID is: {}".format(uuid))
     api_link = "https://pro.urlscan.io/api/v1/livescan/us01/result/{}".format(
         uuid)
     # making the sha256 reveal request
-    print("Collecting sha256 value")
+    print("Collecting sha256 value from {}".format(api_link))
     while True:
         try:
             resp = requests.get(api_link, headers=headers).json()

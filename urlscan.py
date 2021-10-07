@@ -114,7 +114,6 @@ def performDownload(item_link):
     except:
         print("Failed to open {}".format(api_link))
         return
-    print(resp)
     # collecting the uuid from the response
     uuid = resp.get('uuid')
     print("UUID is: {}".format(uuid))
@@ -128,10 +127,11 @@ def performDownload(item_link):
         except:
             print("Failed to open {}".format(api_link))
             return
-        print(resp)
+        resp = resp.get('meta').get('processors')
         # accessing the sha256 and other value from the response
         try:
-            sha256_val = resp.get('download').get('data')[0].get('sha256')
+            sha256_val = resp.get(
+                'download').get('data')[0].get('sha256')
             break
         except:
             sleep(5)

@@ -1,6 +1,7 @@
 import requests
 import argparse
 from time import sleep
+import json
 
 
 urlscan_apikey = ""  # put urlscan api key here
@@ -108,10 +109,12 @@ def performDownload(item_link):
     # sending the task entry request
     print("Submitting task ...")
     try:
-        resp = requests.post(api_link, headers=headers, data=data).json()
+        resp = requests.post(api_link, headers=headers,
+                             data=json.dumps(data)).json()
     except:
         print("Failed to open {}".format(api_link))
         return
+    print(resp)
     # collecting the uuid from the response
     uuid = resp.get('uuid')
     print("UUID is: {}".format(uuid))
